@@ -10,7 +10,7 @@ jobs:
       - shell: bash
         run: |
           sudo apt update
-          sudo apt install ninja-build
+          sudo apt install ninja-build meson
           git clone --single-branch --branch ipod_touch_1g https://github.com/devos50/qemu.git --jobs 10
           cd qemu
           mkdir build
