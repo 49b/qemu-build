@@ -1,0 +1,22 @@
+name: Share data between jobs
+
+on: [push]
+
+jobs:
+  job_1:
+    name: Build iPod emulator
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: |
+          git clone --single-branch --branch ipod_touch_1g https://github.com/devos50/qemu.git --jobs 10
+          cd qemu
+          mkdir build
+          cd build
+          ../configure --enable-sdl --disable-cocoa --target-list=arm-softmmu --disable-capstone --disable-pie --disable-slirp --disable-werror --extra-cflags="-fno-omit-frame-pointer -fsanitize=address -g" --extra-ldflags='-lcrypto -fsanitize=address' # github.com/devos50/qemu/pull/15
+          make -j$(nproc)
+      - name: Build
+        uses: actions/upload-artifact@v3
+        with:
+          name: Build
+          path: qemu/
