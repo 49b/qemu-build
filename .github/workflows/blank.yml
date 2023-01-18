@@ -1,4 +1,4 @@
-name: Share data between jobs
+name: Build iPod emulator
 
 on: [push]
 
@@ -17,8 +17,8 @@ jobs:
           cd build
           ../configure --enable-sdl --disable-cocoa --target-list=arm-softmmu --disable-capstone --disable-pie --disable-slirp --disable-werror --extra-cflags="-fno-omit-frame-pointer -fsanitize=address -g" --extra-ldflags='-lcrypto -fsanitize=address' # github.com/devos50/qemu/pull/15
           make -j$(nproc)
-      - name: Build
+      - name: qemu
         uses: actions/upload-artifact@v3
         with:
-          name: Build
+          name: qemu
           path: qemu/
